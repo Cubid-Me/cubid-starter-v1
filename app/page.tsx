@@ -1,79 +1,46 @@
 "use client";
-import { useEffect, useState } from "react";
-import { NavbarUnauthenticated } from "@/components/Navbar";
-import { NavbarAuthenticated } from "@/components/Navbar";
-import Hero from "@/components/home/Hero";
-import Features from "@/components/home/Features";
-import HowItWorks from "@/components/home/HowItWorks";
-import Testimonials from "@/components/home/Testimonials";
-import CallToAction from "@/components/home/CallToAction";
-import Footer from "@/components/home/Footer";
-import ModalLayoutNew from "@/components/modals/ModalLayoutNew";
-import SignInModal from "@/components/modals/SignInModal";
-import { useTheme } from "@/context/ThemeContext";
-import { getSupabaseClient } from "@/utils/supabase/client"; // Import the getSupabaseClient function
+import Link from "next/link";
+import GenerationStep from "@/components/home/generationStep";
+import Navbar from "@/components/Header";
+import { createClient } from "@/utils/supabase/client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-const supabase = getSupabaseClient(); // Get the Supabase client
+function Hero() {
+  const supabase = createClient();
 
-export default function HomePage() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const [isAuthModalOpen, setAuthModalOpen] = useState(false);
-  const { theme } = useTheme();
+  const { push } = useRouter();
 
   useEffect(() => {
-    const checkAuth = async () => {
-      console.log('Checking authentication status...');
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        console.log('Session data:', session);
-        setIsAuthenticated(!!session);
-      } catch (error) {
-        console.error('Error fetching session:', error);
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (session?.user) {
+        push("/protected");
       }
-    };
-
-    checkAuth().catch(console.error);
+    });
   }, []);
-
-  const handleAuthClick = () => {
-    setAuthModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setAuthModalOpen(false);
-  };
-
-  const handleLogoutClick = async () => {
-    await supabase.auth.signOut();
-    setIsAuthenticated(false);
-    window.location.href = '/';
-  };
-
-  // Render nothing while authentication status is being checked
-  if (isAuthenticated === null) {
-    return <div>Loading...</div>; // Optionally show a spinner or placeholder
-  }
-  
   return (
-    <div className={`w-full min-h-screen ${theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}>
-      {isAuthenticated ? (
-        <NavbarAuthenticated onLogoutClick={handleLogoutClick} onAuthClick={function (): void {
-          throw new Error("Function not implemented.");
-        } } />
-      ) : (
-        <NavbarUnauthenticated onAuthClick={handleAuthClick} onLogoutClick={function (): void {
-            throw new Error("Function not implemented.");
-          } } />
-      )}
-      <Hero onAuthClick={handleAuthClick} isAuthenticated={isAuthenticated} />
-      <Features />
-      <HowItWorks onAuthClick={handleAuthClick} isAuthenticated={isAuthenticated} />
-      <Testimonials />
-      <CallToAction onAuthClick={handleAuthClick} isAuthenticated={isAuthenticated} />
-      <Footer />
-      <ModalLayoutNew isOpen={isAuthModalOpen} onClose={handleCloseModal} size="large">
-        <SignInModal closeModal={handleCloseModal} extraObject={{ isSignIn: true }} />
-      </ModalLayoutNew>
-    </div>
+    <>
+      <Navbar />
+      <div className="hero py-12 bg-gradient-to-t from-blue-500 to-purple-700">
+        <div className="hero-content md:px-0 px-4 max-w-6xl flex-col lg:flex-row-reverse">
+          <img
+            src="https://plus.unsplash.com/premium_photo-1681319553238-9860299dfb0f?auto=format&fit=crop&q=80&w=2831&ixlib=rb-4.0.3"
+            className="max-w-sm  h-80 object-cover rounded-lg shadow-2xl"
+          />
+          <div>
+            <h1 className="text-5xl text-slate-100 font-bold md:leading-none leading-tight md:mt-0 mt-10">
+              Cubid Micro App Template
+            </h1>
+            <p className="py-2 text-xl text-slate-100 mt-4 pr-12">
+              Mciro App to speed up your dev processes when building cubid based
+              apps
+            </p>
+          </div>
+        </div>
+      </div>
+      <GenerationStep />
+    </>
   );
 }
+
+export default Hero;

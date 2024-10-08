@@ -1,36 +1,6 @@
-# SpareChange
+## Getting Started
 
-## Overview
-
-SpareChange is an innovative tipping app developed for the ETH TO hackathon, designed to enable easy, secure, and direct donations to panhandlers and street performers. By leveraging modern technologies like **Next.js**, **Supabase**, and **Vercel**, SpareChange facilitates frictionless micro-donations, allowing users to make an impact with just a few taps on their mobile devices.
-
-## Features
-
-- **Secure Donations**: Ensures safe transactions using trusted platforms.
-- **User-friendly Interface**: Simple and intuitive design for both donors and recipients.
-- **Location-based Donations**: Donors can easily find and support individuals near them.
-- **Seamless Integration**: Works seamlessly with existing digital payment systems.
-
-## Tech Stack
-
-- **Next.js**: For building the fast, responsive front-end of the application.
-- **Supabase**: Utilized as a back-end service for managing user data, authentication, and real-time databases.
-- **Vercel**: Hosts our serverless deployment, ensuring the app is scalable and reliable.
-
-This repo was originally cloned from CubidStarter. Below is the original "getting started" chapter from CubidStarter, it applies to this repo too.
-
-## Getting Started with CubidStarter
-
-To set up the project locally, follow these steps:
-
-### Prerequisites
-
-Make sure you have the following installed on your machine:
-
-- [Node.js](https://nodejs.org/) (v14 or later)
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
-
-Then follow these steps to set up and start developing your project:
+Follow these steps to set up and start developing your project:
 
 1. **Fork the Repo**
    - Fork the repository and clone it to your local machine.

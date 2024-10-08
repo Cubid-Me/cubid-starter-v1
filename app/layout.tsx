@@ -1,19 +1,20 @@
-// app/layout.tsx
-import { Metadata } from 'next';
-import ClientLayout from '@/app/ClientLayout'; // Import the client layout component
+"use client";
+import { GeistSans } from "geist/font/sans";
+import "./globals.css";
+import { Provider } from "react-redux";
+import store from "../store";
 
-export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
-  title: 'SpareChange',
-  description: 'Empowering change, one coin at a time',
-  // Add any other metadata like Open Graph, Twitter, etc.
-};
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en">
-      <body>
-        <ClientLayout>{children}</ClientLayout> {/* Render the client layout */}
+    <html lang="en" className={GeistSans.className}>
+      <body className="bg-background text-foreground">
+        <main className="min-h-screen flex flex-col items-center">
+          <Provider store={store}>{children}</Provider>
+        </main>
       </body>
     </html>
   );
