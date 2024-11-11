@@ -1,3 +1,5 @@
+Note: This repo has been deprecated and archived. It uses the v1 APIs. Please use Cubid-starter-v2 instead.
+
 ## Getting Started
 
 Follow these steps to set up and start developing your project:
